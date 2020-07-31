@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="@dimen/radius_shape"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <enthusiast.yzw.shift_arrangement_helper.custom_views.CircleImageView
+            android:id="@+id/imageview_item_person_headshow"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_ico_personal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:gravity="bottom"
+            android:text="这里是姓名"
+            android:textColor="@color/colorText"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageview_item_person_headshow"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_person_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:gravity="bottom"
+            android:text="男"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/imageview_item_person_headshow"
+            app:layout_constraintTop_toBottomOf="@+id/textview_item_person_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_person_age"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="24dp"
+            android:gravity="bottom"
+            android:text="20 岁"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/textview_item_person_gender"
+            app:layout_constraintTop_toBottomOf="@+id/textview_item_person_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_person_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="16dp"
+            android:padding="8dp"
+            android:text="在岗"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_item_person_headshow" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_person_ratio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="16dp"
+            android:padding="8dp"
+            android:text="系数：1.1"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/textview_item_person_status"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_item_person_headshow" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_person_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:drawableStart="@drawable/ic_ico_personal"
+            android:drawablePadding="16dp"
+            android:padding="8dp"
+            android:text="13888888888"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_item_person_status" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_person_school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:drawableStart="@drawable/ic_ico_personal"
+            android:drawablePadding="16dp"
+            android:padding="8dp"
+            android:text="这里是学校信息"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_item_person_phone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_person_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:drawableStart="@drawable/ic_ico_personal"
+            android:drawablePadding="16dp"
+            android:padding="8dp"
+            android:text="这里是备注信息"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_item_person_school" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

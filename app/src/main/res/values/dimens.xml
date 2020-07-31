@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="radius_shape">10dp</dimen>
+    <dimen name="bottom_recyclerview_height">88dp</dimen>
+</resources>
