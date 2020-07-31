@@ -19,11 +19,11 @@ public class WorkCategory {
         }
     }
 
-    private long id;
-    private String name;
-    private String UUID;
-    private MODE mode;
-    private float overTimePay;
+    private long id = -1L;
+    private String name = "";
+    private String UUID = "";
+    private MODE mode = MODE.NORMAL;
+    private float overTimePay =0f;
 
     public long getId() {
         return id;

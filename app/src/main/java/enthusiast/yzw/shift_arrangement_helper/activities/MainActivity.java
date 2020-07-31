@@ -28,7 +28,7 @@ import enthusiast.yzw.shift_arrangement_helper.moduls.TodayShift;
 import enthusiast.yzw.shift_arrangement_helper.moduls.WorkCategory;
 
 public class MainActivity extends AppCompatActivity {
-    private AppCompatTextView textviewGroupName,titleTextView;
+    private AppCompatTextView textviewGroupName;
     private RecyclerView recyclerviewTodayShift;
     private MaterialButton button1;
     private MaterialButton button2;
@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton button5;
     private MaterialButton button6;
     private MaterialButton button7;
-    private MaterialButton button8;
 
     private SnapHelper snapHelper;
     private MyAdapter<TodayShift> adapter;
@@ -68,14 +67,12 @@ public class MainActivity extends AppCompatActivity {
         button5 = findViewById(R.id.button_5);
         button6 = findViewById(R.id.button_6);
         button7 = findViewById(R.id.button_7);
-        button8 = findViewById(R.id.button_8);
-        button8.setVisibility(View.INVISIBLE);
     }
 
     private void initial(){
         todayShifts = new ArrayList<>();
         getTestData();
-        snapHelper = new PagerSnapHelper();
+        snapHelper = new LinearSnapHelper();
         adapter = new MyAdapter<TodayShift>(todayShifts) {
             @Override
             public void bindData(MyViewHolder myViewHolder, TodayShift data) {

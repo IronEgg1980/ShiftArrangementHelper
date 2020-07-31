@@ -1,4 +1,13 @@
 package enthusiast.yzw.shift_arrangement_helper;
 
-public class MyApp {
+import android.app.Application;
+
+import enthusiast.yzw.shift_arrangement_helper.tools.DbHelper;
+
+public class MyApp extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        DbHelper.initial(this);
+    }
 }

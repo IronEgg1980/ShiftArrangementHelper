@@ -15,16 +15,16 @@ public class Person {
         }
     }
 
-    private long id;
-    private String UUID;
-    private String name;
-    private int age;
-    private GENDER gender;
-    private String post;
-    private String professor;
-    private String school;
-    private String phone;
-    private String note;
+    private long id = 1L;
+    private String UUID ="";
+    private String name = "";
+    private int age = 0;
+    private GENDER gender = GENDER.MAN;
+    private String post = "";
+    private String professor="";
+    private String school="";
+    private String phone="";
+    private String note="";
 
     public long getId() {
         return id;

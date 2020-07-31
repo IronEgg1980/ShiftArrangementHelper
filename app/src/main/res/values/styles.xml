@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -15,4 +15,14 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="MainButtonStyle">
+        <item name="android:layout_width">160dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="backgroundTint">@android:color/white</item>
+        <item name="cornerRadius">@dimen/radius_shape</item>
+        <item name="rippleColor">@color/colorAccent</item>
+        <item name="iconSize">32dp</item>
+        <item name="iconPadding">8dp</item>
+    </style>
 </resources>
