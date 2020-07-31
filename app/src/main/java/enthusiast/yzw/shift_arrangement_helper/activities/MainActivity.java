@@ -9,7 +9,11 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.view.View;
 
@@ -35,9 +39,24 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton button7;
     private MaterialButton button8;
 
-    private RecyclerViewToGalleryHelper recyclerViewToGalleryHelper;
+    private SnapHelper snapHelper;
     private MyAdapter<TodayShift> adapter;
     private List<TodayShift> todayShifts;
+
+    private void getTestData(){
+        for(int i = 1;i<5;i++){
+            TodayShift todayShift = new TodayShift();
+            WorkCategory workCategory = new WorkCategory();
+            workCategory.setName("班次"+i);
+            todayShift.workCategory = workCategory;
+            for(int j = 1;j<4;j++){
+                Person person = new Person();
+                person.setName("人员"+j);
+                todayShift.people.add(person);
+            }
+            todayShifts.add(todayShift);
+        }
+    }
 
     private void initialView(){
         textviewGroupName = findViewById(R.id.textview_group_name);
@@ -55,27 +74,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void initial(){
         todayShifts = new ArrayList<>();
-        for(int i = 1;i<5;i++){
-            TodayShift todayShift = new TodayShift();
-            WorkCategory workCategory = new WorkCategory();
-            workCategory.setName("班次"+i);
-            todayShift.workCategory = workCategory;
-            for(int j = 1;j<3;j++){
-                Person person = new Person();
-                person.setName("人员"+j);
-                todayShift.people.add(person);
-            }
-            todayShifts.add(todayShift);
-        }
-        recyclerViewToGalleryHelper = new RecyclerViewToGalleryHelper(this);
+        getTestData();
+        snapHelper = new PagerSnapHelper();
         adapter = new MyAdapter<TodayShift>(todayShifts) {
             @Override
             public void bindData(MyViewHolder myViewHolder, TodayShift data) {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (Person p : data.people){
-                    stringBuilder.append(p.getName()).append("、 ");
+                    stringBuilder.append("、").append(p.getName());
                 }
-                myViewHolder.setText(R.id.textview_item_today_shift_person,stringBuilder.substring(0,stringBuilder.length() - 1));
+                myViewHolder.setText(R.id.textview_item_today_shift_person,stringBuilder.substring(1));
                 myViewHolder.setText(R.id.textview_item_today_shift_work,data.workCategory.getName());
             }
 
@@ -85,7 +93,10 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         recyclerviewTodayShift.setAdapter(adapter);
-        recyclerViewToGalleryHelper.attchToRecyclerView(recyclerviewTodayShift);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(RecyclerView.HORIZONTAL);
+        recyclerviewTodayShift.setLayoutManager(manager);
+        snapHelper.attachToRecyclerView(recyclerviewTodayShift);
     }
 
     @Override
