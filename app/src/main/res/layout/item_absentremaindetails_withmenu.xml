@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeMenuLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_absentremaindetails_date"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:background="@android:color/holo_blue_dark"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="2020年\n7月10日"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textview_item_absentremaindetails_reason"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_absentremaindetails_reason"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
+            android:text="调整"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/textview_item_absentremaindetails_value"
+            app:layout_constraintStart_toEndOf="@id/textview_item_absentremaindetails_date"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_absentremaindetails_value"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="end|center_vertical"
+            android:padding="8dp"
+            android:text="-1"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textview_item_absentremaindetails_reason"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textview_item_absentremaindetails_reason"
+            app:layout_constraintTop_toTopOf="@+id/textview_item_absentremaindetails_reason" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_item_absentremaindetails_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="记录时间：2020年12月12日 12:12:12"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_item_absentremaindetails_reason" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/swipemenu_dele"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:text="撤销"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_red_light"/>
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

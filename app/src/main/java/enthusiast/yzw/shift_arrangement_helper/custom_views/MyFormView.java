@@ -198,6 +198,10 @@ public class MyFormView extends View {
         this.title = new Title(header, 500, "标题", "副标题");
     }
 
+    public void setFirstScale(boolean b) {
+        this.isFirstDraw = b;
+    }
+
     public Header getHeader() {
         return this.header;
     }
@@ -627,7 +631,9 @@ public class MyFormView extends View {
             right = cellLeft + cell.getWidth() * getMatrixScaleX();
             cellRectF.set(cellLeft, top, right, bottom);
             canvas.drawRect(cellRectF, bgPaint);
-            drawText(canvas, cellRectF, header.getCell(i).value.toString());
+            if(!TextUtils.isEmpty(header.getCell(i).value)) {
+                drawText(canvas, cellRectF, header.getCell(i).value, 3);
+            }
             if (i < header.getColumnCount() - 1)
                 canvas.drawLine(cellRectF.right, cellRectF.top, cellRectF.right, cellRectF.bottom, linePaint);
             cellLeft = right;
@@ -701,9 +707,11 @@ public class MyFormView extends View {
                         if (cell.getColumnIndex() < row.getColumnCount() - 1) {
                             canvas.drawLine(right, top, right, bottom, linePaint);
                         }
-                        textPaint.setTextSize(cellTextSize);
-                        textPaint.setStrokeWidth(cellTextStroke);
-                        drawText(canvas, cellRectF, cell.value.toString());
+                        if (!TextUtils.isEmpty(cell.value)) {
+                            textPaint.setTextSize(cellTextSize);
+                            textPaint.setStrokeWidth(cellTextStroke);
+                            drawText(canvas, cellRectF, cell.value, 2);
+                        }
                     }
                     cellLeft = right;
                 }
@@ -721,13 +729,13 @@ public class MyFormView extends View {
         }
     }
 
-    private void drawText(Canvas canvas, RectF rectF, CharSequence text) {
+    private void drawText(Canvas canvas, RectF rectF, CharSequence text, int maxLines) {
         textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setColor(Color.BLACK);
         float cellPadding = 25 * getMatrixScaleX();
         int width = (int) (rectF.width() - cellPadding * 2);
         StaticLayout.Builder builder = StaticLayout.Builder.obtain(text, 0, text.length(), textPaint, width);
-        StaticLayout staticLayout = builder.setMaxLines(3)
+        StaticLayout staticLayout = builder.setMaxLines(maxLines)
                 .setEllipsize(TextUtils.TruncateAt.END)
                 .setLineSpacing(0, 1.3f)
                 .setAlignment(cellAlignment)
@@ -857,10 +865,7 @@ public class MyFormView extends View {
         }
 
         public void notifyDataDelete() {
-            if (formView.getCurrentCell() != null) {
-                dataList.remove(formView.getCurrentCell().getRowIndex());
-                formView.onCurrentRowDeleted();
-            }
+            formView.onCurrentRowDeleted();
         }
 
         public int getRowCount() {

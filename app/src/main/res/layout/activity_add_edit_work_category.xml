@@ -11,27 +11,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:theme="@style/Theme.MaterialComponents"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/radius_shape"
         app:cardElevation="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/appCompatTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/appCompatImageView"
                     android:layout_width="48dp"
@@ -42,6 +46,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edittext_activity_add_edit_work_name"
                     android:layout_width="0dp"
@@ -77,9 +82,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:buttonTint="@color/colorAccent"
                         android:checked="true"
                         android:text="常规"
-                        android:buttonTint="@color/colorAccent"
                         android:textColor="@color/colorText"
                         android:textSize="16sp" />
 
@@ -88,8 +93,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="加班"
                         android:buttonTint="@color/colorAccent"
+                        android:text="加班"
                         android:textColor="@color/colorText"
                         android:textSize="16sp" />
 
@@ -98,13 +103,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="请假"
                         android:buttonTint="@color/colorAccent"
+                        android:text="请假"
                         android:textColor="@color/colorText"
                         android:textSize="16sp" />
                 </RadioGroup>
 
                 <com.rengwuxian.materialedittext.MaterialEditText
+                    android:visibility="invisible"
                     android:id="@+id/edittext_activity_add_edit_work_overtimepay"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -121,22 +127,74 @@
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
                     app:met_floatingLabelText="加班金额" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkbox_activity_add_edit_work_autominus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:buttonTint="@color/colorAccent"
+                    android:textColor="@color/colorText"
+                    android:text="自动扣假"
+                    app:layout_constraintBottom_toBottomOf="@id/edittext_activity_add_edit_work_minusValue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edittext_activity_add_edit_work_minusValue" />
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edittext_activity_add_edit_work_minusValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="0.0"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:textColor="@color/colorText"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/checkbox_activity_add_edit_work_autominus"
+                    app:layout_constraintTop_toBottomOf="@+id/radiogoup"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_floatingLabelText="扣假天数" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_activity_add_edit_work_save1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="保存"
+                    android:textColor="@color/colorText"
+                    android:textSize="18sp"
+                    app:backgroundTint="@android:color/white"
+                    app:cornerRadius="@dimen/radius_shape"
+                    app:elevation="8dp"
+                    app:layout_constraintEnd_toStartOf="@id/button_activity_add_edit_work_save2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edittext_activity_add_edit_work_overtimepay"
+                    app:rippleColor="@color/colorAccent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_activity_add_edit_work_save2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="保存并继续"
+                    android:textColor="@color/colorText"
+                    android:textSize="18sp"
+                    app:backgroundTint="@android:color/white"
+                    app:cornerRadius="@dimen/radius_shape"
+                    app:elevation="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/button_activity_add_edit_work_save1"
+                    app:layout_constraintTop_toBottomOf="@id/edittext_activity_add_edit_work_overtimepay"
+                    app:rippleColor="@color/colorAccent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
     </androidx.cardview.widget.CardView>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/appCompatTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="12dp"
-        android:text="保存"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

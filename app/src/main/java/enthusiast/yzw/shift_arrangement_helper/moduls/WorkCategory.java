@@ -1,33 +1,17 @@
 package enthusiast.yzw.shift_arrangement_helper.moduls;
 
+import android.text.TextUtils;
+
 import androidx.annotation.Nullable;
 
-public class WorkCategory {
-    public enum MODE {
-        NORMAL("正常"),
-        OVER_TIME("加班"),
-        ABSENT("缺勤");
+import enthusiast.yzw.shift_arrangement_helper.enums.WorkMode;
 
-        private MODE(String text){
-            this.text = text;
-        }
-
-        private String text;
-
-        public String getText() {
-            return text;
-        }
-    }
-
-    private long id = -1L;
+public class WorkCategory extends DatabaseEntity {
     private String name = "";
-    private String UUID = "";
-    private MODE mode = MODE.NORMAL;
-    private float overTimePay =0f;
-
-    public long getId() {
-        return id;
-    }
+    private WorkMode mode = WorkMode.NORMAL;
+    private double overTimePay =0f;
+    private boolean isAutoMinus = false;
+    private double minusValue = 1.0;
 
     public String getName() {
         return name;
@@ -37,28 +21,45 @@ public class WorkCategory {
         this.name = name;
     }
 
-    public String getUUID() {
-        return UUID;
-    }
-
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
-    }
-
-    public MODE getMode() {
+    public WorkMode getMode() {
         return mode;
     }
 
-    public void setMode(MODE mode) {
+    public void setMode(WorkMode mode) {
         this.mode = mode;
     }
 
-    public float getOverTimePay() {
+    public double getOverTimePay() {
         return overTimePay;
     }
 
-    public void setOverTimePay(float overTimePay) {
+    public void setOverTimePay(double overTimePay) {
         this.overTimePay = overTimePay;
+    }
+
+    public boolean isAutoMinus() {
+        return isAutoMinus;
+    }
+
+    public void setAutoMinus(boolean autoMinus) {
+        isAutoMinus = autoMinus;
+    }
+
+    public double getMinusValue() {
+        return minusValue;
+    }
+
+    public void setMinusValue(double minusValue) {
+        this.minusValue = minusValue;
+    }
+
+    public boolean isAvailable(){
+        return isSaved() && !TextUtils.isEmpty(this.name) ;
+    }
+
+    @Override
+    public boolean dele() {
+        return super.dele();
     }
 
     @Override

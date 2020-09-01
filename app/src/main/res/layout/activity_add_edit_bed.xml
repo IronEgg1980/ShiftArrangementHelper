@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -47,22 +46,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/checkbox_activity_add_edit_bed_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:background="@android:color/white"
-                    android:buttonTint="@color/colorAccent"
-                    android:checked="false"
-                    android:text="加床"
-                    android:textColor="@color/colorText"
-                    android:textSize="16sp"
-                    android:theme="@style/Theme.MaterialComponents"
-                    app:layout_constraintBottom_toBottomOf="@+id/edittext_activity_add_edit_bed_name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/edittext_activity_add_edit_bed_name" />
-
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edittext_activity_add_edit_bed_name"
                     android:layout_width="0dp"
@@ -70,12 +53,12 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
-                    android:hint="0-9999"
-                    android:inputType="number"
-                    android:maxLength="4"
+                    android:hint="请输入床号"
+                    android:inputType="text"
+                    android:maxLength="6"
                     android:textColor="@color/colorText"
                     android:textSize="20sp"
-                    app:layout_constraintEnd_toStartOf="@+id/checkbox_activity_add_edit_bed_1"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
                     app:met_floatingLabel="highlight"
@@ -86,20 +69,37 @@
                     android:id="@+id/button_activity_add_edit_bed_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="32dp"
-                    android:text="新增"
-                    android:textColor="@color/colorAccent"
+                    android:layout_marginEnd="8dp"
+                    android:text="保存"
+                    android:textColor="@color/colorText"
+                    android:textSize="18sp"
+                    app:backgroundTint="@android:color/white"
+                    app:cornerRadius="@dimen/radius_shape"
+                    app:elevation="8dp"
+                    app:layout_constraintEnd_toStartOf="@id/button_activity_add_edit_bed_3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edittext_activity_add_edit_bed_name"
+                    app:rippleColor="@color/colorAccent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_activity_add_edit_bed_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="保存并继续"
+                    android:textColor="@color/colorText"
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/white"
                     app:cornerRadius="@dimen/radius_shape"
                     app:elevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/button_activity_add_edit_bed_1"
                     app:layout_constraintTop_toBottomOf="@+id/edittext_activity_add_edit_bed_name"
                     app:rippleColor="@color/colorAccent" />
-
                 <View
                     android:id="@+id/line1"
                     android:layout_width="0dp"
@@ -114,15 +114,17 @@
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edittext_activity_add_edit_bed_name_start"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="48dp"
+                    android:layout_marginEnd="8dp"
                     android:hint="0-9999"
                     android:inputType="number"
                     android:maxLength="4"
                     android:textColor="@color/colorText"
                     android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/imabeview_line"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line1"
                     app:met_floatingLabel="highlight"
@@ -131,21 +133,21 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imabeview_line"
-                    android:layout_width="0dp"
+                    android:layout_width="64dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_line_to_right"
                     android:tint="@color/colorAccent"
-                    app:layout_constraintBottom_toBottomOf="@+id/edittext_activity_add_edit_bed_name_end"
-                    app:layout_constraintEnd_toStartOf="@+id/edittext_activity_add_edit_bed_name_end"
-                    app:layout_constraintStart_toEndOf="@+id/edittext_activity_add_edit_bed_name_start"
-                    app:layout_constraintTop_toTopOf="@+id/edittext_activity_add_edit_bed_name_end" />
+                    app:layout_constraintStart_toEndOf="@id/edittext_activity_add_edit_bed_name_start"
+                    app:layout_constraintEnd_toStartOf="@id/edittext_activity_add_edit_bed_name_end"
+                    app:layout_constraintBottom_toBottomOf="@+id/edittext_activity_add_edit_bed_name_start"
+                    app:layout_constraintTop_toTopOf="@+id/edittext_activity_add_edit_bed_name_start"
+                    tools:layout_editor_absoluteX="192dp" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/edittext_activity_add_edit_bed_name_end"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="48dp"
                     android:layout_marginEnd="16dp"
                     android:hint="0-9999"
@@ -153,7 +155,8 @@
                     android:maxLength="4"
                     android:textColor="@color/colorText"
                     android:textSize="20sp"
-                    app:layout_constraintEnd_toStartOf="@+id/checkbox_activity_add_edit_bed_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imabeview_line"
                     app:layout_constraintTop_toBottomOf="@+id/line1"
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelAlwaysShown="true"
@@ -163,7 +166,7 @@
                     android:id="@+id/checkbox_activity_add_edit_bed_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
                     android:background="@android:color/white"
                     android:buttonTint="@color/colorAccent"
                     android:checked="false"
@@ -171,28 +174,57 @@
                     android:textColor="@color/colorText"
                     android:textSize="16sp"
                     android:theme="@style/Theme.MaterialComponents"
-                    app:layout_constraintBottom_toBottomOf="@+id/edittext_activity_add_edit_bed_name_end"
+                    app:layout_constraintBottom_toBottomOf="@+id/edittext_activity_add_edit_bed_pre_name"
+                    app:layout_constraintStart_toStartOf="@+id/edittext_activity_add_edit_bed_name_start"
+                    app:layout_constraintTop_toBottomOf="@+id/imabeview_line" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/edittext_activity_add_edit_bed_pre_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:hint="加床床号前缀（如“+”、“加”）"
+                    android:inputType="text"
+                    android:maxLength="2"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/edittext_activity_add_edit_bed_name_end" />
+                    app:layout_constraintStart_toEndOf="@+id/checkbox_activity_add_edit_bed_2"
+                    app:layout_constraintTop_toBottomOf="@id/imabeview_line"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_floatingLabelText="床号前缀" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_activity_add_edit_bed_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="32dp"
                     android:text="批量新增"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorText"
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/white"
                     app:cornerRadius="@dimen/radius_shape"
                     app:elevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edittext_activity_add_edit_bed_name_start"
+                    app:layout_constraintTop_toBottomOf="@+id/edittext_activity_add_edit_bed_pre_name"
                     app:rippleColor="@color/colorAccent" />
 
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/batch_addition_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="edittext_activity_add_edit_bed_name_start,
+                    edittext_activity_add_edit_bed_name_end,
+                    button_activity_add_edit_bed_2,
+                    checkbox_activity_add_edit_bed_2,
+                     line1,imabeview_line,edittext_activity_add_edit_bed_pre_name" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.cardview.widget.CardView>

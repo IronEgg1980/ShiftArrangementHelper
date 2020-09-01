@@ -6,4 +6,6 @@
 
     <color name="colorText">#666666</color>
     <color name="colorMessageBg">#cfcfcf</color>
+
+    <color name="colorMenuBg">#aa000000</color>
 </resources>

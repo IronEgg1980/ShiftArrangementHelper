@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@android:color/white"
     app:cardElevation="8dp"
     app:cardCornerRadius="@dimen/radius_shape"
-    android:theme="@style/Theme.MaterialComponents"
+    android:layout_marginEnd="8dp"
     android:layout_width="@dimen/bottom_recyclerview_height"
     android:layout_height="@dimen/bottom_recyclerview_height">
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,10 +12,12 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageview_item_edit_shift_list"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_ico_personal"
             android:padding="12dp"
+            android:tint="@android:color/holo_blue_light"
+            android:background="@drawable/shape_menu_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

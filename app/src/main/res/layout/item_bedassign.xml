@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/Theme.MaterialComponents"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="@dimen/radius_shape"
+    app:cardBackgroundColor="@android:color/white"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.mcxtzhang.swipemenulib.SwipeMenuLayout
+        android:id="@+id/swipeMenuLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/rootLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/person_ico"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_person3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textview_item_bedassign_person" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_item_bedassign_person"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="姓名五个字"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/person_ico"
+                app:layout_constraintTop_toTopOf="@id/textview_item_bedassign_bed" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/bed_ico"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:padding="4dp"
+                android:src="@drawable/bed_ico"
+                app:layout_constraintStart_toEndOf="@id/textview_item_bedassign_person"
+                app:layout_constraintTop_toTopOf="@+id/textview_item_bedassign_bed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_item_bedassign_bed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="床位"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/bed_ico"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/swipmenu_assign_bed"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_blue_dark"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:text="床位分配"
+            android:gravity="center"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/swipmenu_clear_bed"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_red_light"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:text="清空"
+            android:gravity="center"/>
+    </com.mcxtzhang.swipemenulib.SwipeMenuLayout>
+</androidx.cardview.widget.CardView>

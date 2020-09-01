@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EditAbsentRemain">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_adjust_absentremain_person"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:text="人员姓名"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <RadioGroup
+        android:id="@+id/radiogoup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_adjust_absentremain_person">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/radio1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:button="@drawable/selector_add_number"
+            android:padding="8dp"
+            android:text="补假"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/radio2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:button="@drawable/selector_minus_number"
+            android:padding="8dp"
+            android:text="扣除"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/radio3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@drawable/selector_adjust"
+            android:padding="8dp"
+            android:text="校正"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edittext_adjust_absentremain_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="天数(0.0)"
+        android:inputType="numberDecimal"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/radiogoup"
+        app:layout_constraintStart_toStartOf="@+id/radiogoup"
+        app:layout_constraintTop_toBottomOf="@+id/radiogoup"
+        app:met_floatingLabel="highlight"
+        app:met_floatingLabelAlwaysShown="true"
+        app:met_floatingLabelText="天数" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edittext_adjust_absentremain_reason"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="调整原因"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/radiogoup"
+        app:layout_constraintStart_toStartOf="@+id/radiogoup"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_adjust_absentremain_value"
+        app:met_floatingLabel="highlight"
+        app:met_floatingLabelAlwaysShown="true"
+        app:met_floatingLabelText="原因" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_adjust_absentremain_confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
+        android:text="确定"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        app:backgroundTint="@android:color/white"
+        app:cornerRadius="@dimen/radius_shape"
+        app:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_adjust_absentremain_reason"
+        app:rippleColor="@color/colorAccent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="明细"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_adjust_absentremain_confirm" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_adjust_absentremain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

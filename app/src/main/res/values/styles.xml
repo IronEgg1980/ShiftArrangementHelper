@@ -25,4 +25,16 @@
         <item name="iconSize">32dp</item>
         <item name="iconPadding">8dp</item>
     </style>
+    <style name="CommonButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="iconSize">24dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">12dp</item>
+        <item name="iconTint">@android:color/holo_orange_dark</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="rippleColor">@color/colorAccent</item>
+    </style>
 </resources>

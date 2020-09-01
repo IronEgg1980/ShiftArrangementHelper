@@ -10,36 +10,26 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textview_dialog_title"
         android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
         android:text="title"
-        app:layout_constraintEnd_toStartOf="@+id/imageview_dialog_close"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageview_dialog_close"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_close"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/textview_dialog_message"
+        android:id="@+id/recyclerview_dialog_selected_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/shape_dialog_message_bg"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:padding="4dp"
+        app:layout_constraintBottom_toTopOf="@id/textview_dialog_confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textview_dialog_confirm"
         app:layout_constraintTop_toBottomOf="@+id/textview_dialog_title" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -49,8 +39,9 @@
         android:layout_marginStart="24dp"
         android:padding="8dp"
         android:text="全选"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/textview_select_reverse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textview_select_reverse" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textview_select_reverse"
@@ -59,21 +50,36 @@
         android:layout_marginStart="24dp"
         android:padding="8dp"
         android:text="反选"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textview_select_all" />
+        app:layout_constraintBottom_toBottomOf="@+id/textview_dialog_cancel"
+        app:layout_constraintStart_toEndOf="@+id/textview_select_all"
+        app:layout_constraintTop_toTopOf="@+id/textview_dialog_cancel" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textview_dialog_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="取消"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textview_dialog_confirm"
+        app:layout_constraintEnd_toStartOf="@id/textview_dialog_confirm"
+        app:layout_constraintTop_toTopOf="@+id/textview_dialog_confirm" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textview_dialog_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
-        android:padding="8dp"
+        android:padding="12dp"
         android:text="选好了"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_dialog_message" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

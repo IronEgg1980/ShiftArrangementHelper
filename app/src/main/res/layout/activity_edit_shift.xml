@@ -6,12 +6,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
-        layout="@layout/common_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageview_toolbar_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_toolbar_title"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:text="标题"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_toolbar_add"
+            app:layout_constraintStart_toEndOf="@+id/imageview_toolbar_back"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageview_toolbar_add"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_add"
+            android:tint="@color/colorAccent"
+            app:layout_constraintEnd_toStartOf="@id/imageview_toolbar_minus"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageview_toolbar_minus"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_minus"
+            android:tint="@color/colorAccent"
+            app:layout_constraintEnd_toStartOf="@id/imageview_toolbar_template"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageview_toolbar_template"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_menu"
+            android:tint="@color/colorAccent"
+            app:layout_constraintEnd_toStartOf="@id/imageview_toolbar_save"
+            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageview_toolbar_save"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <enthusiast.yzw.shift_arrangement_helper.custom_views.MyFormView
         android:id="@+id/myformview_activity_edit_shift"
@@ -44,4 +109,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textview_activity_edit_shift_info" />
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/bottom_group"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="recyclerview_activity_edit_shift,textview_activity_edit_shift_info"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

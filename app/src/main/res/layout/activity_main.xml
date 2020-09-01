@@ -14,18 +14,18 @@
             android:id="@+id/imageview_logo"
             android:layout_width="48dp"
             android:layout_height="100dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/shift_helper_large"
+            app:layout_constraintBottom_toBottomOf="@+id/textview_main_title"
             app:layout_constraintEnd_toStartOf="@id/textview_main_title"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/textview_main_title" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_main_title"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_marginStart="48dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:text="排班助手"
             android:textSize="32sp"
@@ -44,32 +44,35 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_main_title" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_today_shift"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview"
             android:layout_width="0dp"
-            android:layout_height="172dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="56dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/shape_common_bg"
-            android:paddingStart="16dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="@dimen/radius_shape"
+            app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_group_name" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_today_shift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_1"
             style="@style/MainButtonStyle"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="排班表"
-            app:iconTint="@android:color/holo_blue_bright"
             app:icon="@drawable/ic_shift"
-            app:layout_constraintStart_toStartOf="parent"
+            app:iconTint="@android:color/holo_blue_bright"
             app:layout_constraintEnd_toStartOf="@id/button_2"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerview_today_shift" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_2"
@@ -145,21 +148,22 @@
             app:layout_constraintStart_toEndOf="@id/button_7"
             app:layout_constraintEnd_toEndOf="parent"
             />
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:theme="@style/Theme.MaterialComponents"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="@dimen/radius_shape"
             app:cardElevation="8dp"
-            app:contentPadding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cardview"
+            app:layout_constraintStart_toStartOf="@+id/cardview"
             app:layout_constraintTop_toBottomOf="@+id/textview_group_name">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="240dp"
+                android:id="@+id/textview_main_today"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="12dp"
@@ -167,6 +171,6 @@
                 android:textColor="@android:color/holo_blue_dark"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

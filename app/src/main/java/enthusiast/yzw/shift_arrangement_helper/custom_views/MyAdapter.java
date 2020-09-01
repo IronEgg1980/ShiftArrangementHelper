@@ -51,7 +51,7 @@ public abstract class MyAdapter<T> extends RecyclerView.Adapter<MyAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private SparseArray<View> views;
 
-        MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             this.views = new SparseArray<>();
             this.itemView.setClickable(true);

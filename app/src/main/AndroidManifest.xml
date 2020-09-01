@@ -10,6 +10,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.ShowShift"></activity>
+        <activity android:name=".activities.AddOrEditShift" />
+        <activity android:name=".activities.EditAbsentRemain" />
+        <activity android:name=".activities.AbsentRemain" />
+        <activity android:name=".activities.BedAssignActivity" />
+        <activity android:name=".activities.AddOrEditPerson" />
+        <activity android:name=".activities.PersonManage" />
+        <activity android:name=".activities.AddOrEditWorkCategory" />
+        <activity android:name=".activities.WorkCategoryManage" />
+        <activity android:name=".activities.AddOrEditBed" />
+        <activity android:name=".activities.BedManage" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name">
