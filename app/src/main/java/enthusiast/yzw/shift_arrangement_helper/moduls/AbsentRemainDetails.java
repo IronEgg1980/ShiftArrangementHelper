@@ -133,7 +133,6 @@ public class AbsentRemainDetails extends DatabaseEntity {
     }
 
     public void deleAutoMinusAbsent(SQLiteDatabase database){
-        person = Person.find(database,person.getUUID());
         person.setAbsentRemainValue(person.getAbsentRemainValue() - this.varValue);
         person.updateRemainValue(database);
         String condition = "absentremaindetails_uuid = ?";
@@ -164,6 +163,13 @@ public class AbsentRemainDetails extends DatabaseEntity {
 
     public static List<AbsentRemainDetails> findAll(String person_uuid){
         String[] args = {person_uuid};
-        return findAll(DbHelper.getReadDB(),"person_uuid = ?",args);
+        List<AbsentRemainDetails> list = findAll(DbHelper.getReadDB(),"person_uuid = ?",args);
+        if(!list.isEmpty()){
+            Person person = list.get(0).getPerson();
+            for(int i = 1;i<list.size();i++){
+                list.get(i).setPerson(person);
+            }
+        }
+        return list;
     }
 }
