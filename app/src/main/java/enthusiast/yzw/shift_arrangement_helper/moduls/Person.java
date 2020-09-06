@@ -128,14 +128,6 @@ public class Person extends DatabaseEntity {
         return false;
     }
 
-    public boolean updateRemainValue(SQLiteDatabase database){
-        String condition = "person_uuid = ?";
-        String[] args = {this.UUID};
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(getDbColumnName( "absentRemainValue"), this.absentRemainValue);
-        return database.update(this.tableName, contentValues, condition, args) > 0;
-    }
-
     public boolean unRegister(){
         boolean b;
         String condition = "person_uuid = ?";

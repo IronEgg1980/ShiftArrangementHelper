@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setOrganizeName(){
-        InputTextDialog.newInstance("输入名称",organizeName).setListener(new DialogDissmissListener() {
+        InputTextDialog.newInstance("输入名称","").setListener(new DialogDissmissListener() {
             @Override
             public void onDissmiss(DialogResult result, Object... values) {
                 if(result == DialogResult.CONFIRM){

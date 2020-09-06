@@ -120,6 +120,7 @@ public class AddOrEditShift extends AppCompatActivity {
         myFormView.setRowHeight(120);
         myFormView.setTitleHeight(100);
         myFormView.setTitleString("");
+        myFormView.setFirstScale(false);
         myFormView.setOnClick(new MyFormView.OnClick() {
             @Override
             public void onClick(MyFormView.Cell cell) {

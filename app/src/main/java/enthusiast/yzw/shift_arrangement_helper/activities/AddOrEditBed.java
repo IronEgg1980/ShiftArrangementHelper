@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 
 import com.google.android.material.button.MaterialButton;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -25,12 +26,12 @@ import enthusiast.yzw.shift_arrangement_helper.moduls.Bed;
 public class AddOrEditBed extends AppCompatActivity {
     private int resultCode = -1;
     private AppCompatTextView textviewToolbarTitle;
-    private MaterialEditText edittextBedNamePre;
+    private EditText edittextBedNamePre;
     private AppCompatImageView imageviewToolbarMenu;
-    private MaterialEditText edittextActivityAddEditBedName;
+    private EditText edittextActivityAddEditBedName;
     private MaterialButton buttonActivityAddEditBed1;
-    private MaterialEditText edittextActivityAddEditBedNameStart;
-    private MaterialEditText edittextActivityAddEditBedNameEnd;
+    private EditText edittextActivityAddEditBedNameStart;
+    private EditText edittextActivityAddEditBedNameEnd;
     private AppCompatCheckBox checkboxActivityAddEditBed2;
     private MaterialButton buttonActivityAddEditBed2;
     private Group batchAdditionGroup;

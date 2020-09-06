@@ -176,6 +176,7 @@ public class ShowShift extends AppCompatActivity {
         formView.setTitleHeight(250);
         formView.setTitleTextSize(80);
         formView.setTitleString(DbOperator.getOrganizeName() + "排班表");
+        formView.setFirstScale(false);
         formView.setOnClick(new MyFormView.OnClick() {
             @Override
             public void onClick(MyFormView.Cell cell) {
