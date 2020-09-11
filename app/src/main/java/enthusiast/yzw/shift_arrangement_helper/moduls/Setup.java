@@ -1,6 +1,5 @@
 package enthusiast.yzw.shift_arrangement_helper.moduls;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -36,7 +35,6 @@ public class Setup extends DatabaseEntity {
         return database.delete(tableName,selection,args) > 0;
     }
 
-    @Override
     public boolean isExist() {
         String[] args = {this.key, this.value};
         Cursor cursor = DbHelper.getReadDB().rawQuery("SELECT * FROM setup WHERE setup_key = ? AND setup_value = ?",args);
@@ -92,41 +90,4 @@ public class Setup extends DatabaseEntity {
     public static Setup findOneOrFirst(String key) {
         return findOneOrFirst(DbHelper.getReadDB(), key);
     }
-
-//    public static void savePost(String post) {
-//        String selection = "setup_key = ? and setup_value = ?";
-//        String[] args = {"post", post};
-//        SQLiteDatabase database = DbHelper.getWriteDB();
-//        Cursor cursor = database.query("setup", null, selection, args, null, null, null);
-//        boolean b = cursor.moveToFirst();
-//        cursor.close();
-//        if (!b) {
-//            Setup setup = new Setup();
-//            setup.setKey("post");
-//            setup.setValue(post);
-//            setup.save(database);
-//        }
-//    }
-//
-//    public static void saveProfessor(String pro){
-//        String selection = "setup_key = ? and setup_value = ?";
-//        String[] args = {"professor", pro};
-//        SQLiteDatabase database = DbHelper.getWriteDB();
-//        Cursor cursor = database.query("setup", null, selection, args, null, null, null);
-//        boolean b = cursor.moveToFirst();
-//        cursor.close();
-//        if (!b) {
-//            Setup setup = new Setup();
-//            setup.setKey("professor");
-//            setup.setValue(pro);
-//            setup.save(database);
-//        }
-//    }
-//
-//    public static void deleValue(String key, String value){
-//        String selection = "setup_key = ? and setup_value = ?";
-//        String[] args = {key, value};
-//        DbHelper.getWriteDB().delete("setup",selection,args);
-//    }
-
 }

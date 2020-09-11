@@ -16,6 +16,7 @@ public class Bed extends DatabaseEntity {
 
     public List<Person> bedManagerList = new ArrayList<>();
     public boolean isSeleted = false;
+
     public String getName() {
         return this.name;
     }
@@ -23,25 +24,25 @@ public class Bed extends DatabaseEntity {
     public void setName(String name) {
         this.name = name;
     }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj instanceof Bed) {
             Bed bed = (Bed) obj;
-            return this.name.equals(bed.getName()) && this.UUID.equals(bed.getUUID());
+            return this.name.equals(bed.getName());
         }
         return false;
     }
 
-    public boolean saveBedAssign(){
+    public boolean saveBedAssign() {
         boolean b = false;
-        String condition = "bed_uuid = ?";
-        String[] args = {this.UUID};
+        String condition = "bed_id = " + id;
         String tableName = DbHelper.getDataBaseTableName(BedAssign.class);
 
         SQLiteDatabase database = DbHelper.getWriteDB();
         database.beginTransaction();
         try {
-            database.delete(tableName, condition, args);
+            database.delete(tableName, condition, null);
             for (Person person : this.bedManagerList) {
                 BedAssign bedAssign = new BedAssign();
                 bedAssign.setPerson(person);
@@ -50,10 +51,10 @@ public class Bed extends DatabaseEntity {
             }
             database.setTransactionSuccessful();
             b = true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             b = false;
-        }finally {
+        } finally {
             database.endTransaction();
         }
         return b;
@@ -62,46 +63,44 @@ public class Bed extends DatabaseEntity {
     @Override
     public boolean dele() {
         boolean b;
-        String condition = "bed_uuid = ?";
-        String[] args = {this.UUID};
+        String condition = "bed_id = " + id;
         String tableName1 = DbHelper.getDataBaseTableName(BedAssign.class);
         String tableName2 = DbHelper.getDataBaseTableName(Bed.class);
         SQLiteDatabase database = DbHelper.getWriteDB();
         database.beginTransaction();
         try {
-            database.delete(tableName1, condition, args);
-            database.delete(tableName2, condition, args);
+            database.delete(tableName1, condition, null);
+            database.delete(tableName2, condition, null);
             database.setTransactionSuccessful();
             b = true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             b = false;
-        }finally {
+        } finally {
             database.endTransaction();
         }
         return b;
     }
 
-    public void fillPersonList(){
-        String sql = "SELECT person.*,bedassign.bed_uuid FROM bedassign" +
-                " INNER JOIN person ON person.person_uuid = bedassign.person_uuid" +
-                " WHERE bedassign.bed_uuid = ?";
-        String[] args = {this.UUID};
-        Cursor cursor = DbHelper.getReadDB().rawQuery(sql,args);
-        if(cursor.moveToFirst()){
+    public void fillPersonList() {
+        String sql = "SELECT person.*,bedassign.bed_id FROM bedassign" +
+                " INNER JOIN person USING(person_id)" +
+                " WHERE bedassign.bed_id = " + id;
+        Cursor cursor = DbHelper.getReadDB().rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
             do {
-                bedManagerList.add(DbHelper.cursor2Modul(Person.class,cursor));
-            }while (cursor.moveToNext());
+                bedManagerList.add(DbHelper.cursor2Modul(Person.class, cursor));
+            } while (cursor.moveToNext());
         }
         cursor.close();
     }
 
-    public static List<Bed> findAll(){
+    public static List<Bed> findAll() {
         List<Bed> list = new ArrayList<>();
         String sql = "SELECT person.*,bed.*" +
                 " FROM bed" +
-                " Left JOIN bedassign ON bed.bed_uuid = bedassign.bed_uuid" +
-                " Left JOIN person ON bedassign.person_uuid = person.person_uuid" +
+                " Left JOIN bedassign USING(bed_id)" +
+                " Left JOIN person USING(person_id)" +
                 " ORDER BY bed_id";
         Cursor cursor = DbHelper.getReadDB().rawQuery(sql, null);
         if (cursor.moveToFirst()) {

@@ -22,10 +22,10 @@ public class Person extends DatabaseEntity {
     private double ratio = 0;
     private double absentRemainValue = 0f;
     private String post = "";
-    private String professor="";
-    private String school="";
-    private String phone="";
-    private String note="";
+    private String professor = "";
+    private String school = "";
+    private String phone = "";
+    private String note = "";
 
     public boolean isSeleted = false;
     public boolean isShowDetails = false;
@@ -121,17 +121,16 @@ public class Person extends DatabaseEntity {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if(obj instanceof Person){
+        if (obj instanceof Person) {
             Person p = (Person) obj;
-            return this.name.equals(p.getName()) && this.UUID.equals(p.getUUID());
+            return this.name.equals(p.getName());
         }
         return false;
     }
 
-    public boolean unRegister(){
+    public boolean unRegister() {
         boolean b;
-        String condition = "person_uuid = ?";
-        String[] args = {this.UUID};
+        String condition = "person_id = " + id;
 
         String personTableName = DbHelper.getDataBaseTableName(Person.class);
         String detailsTableName = DbHelper.getDataBaseTableName(AbsentRemainDetails.class);
@@ -141,30 +140,29 @@ public class Person extends DatabaseEntity {
         SQLiteDatabase database = DbHelper.getWriteDB();
         try {
             database.beginTransaction();
-            database.delete(personTableName, condition, args);
-            database.delete(detailsTableName, condition,args);
-            database.delete(bedAssignTableName, condition, args);
-            database.delete(shiftNoteTableName, condition, args);
-            database.delete(shiftTableName, condition, args);
+            database.delete(personTableName, condition, null);
+            database.delete(detailsTableName, condition, null);
+            database.delete(bedAssignTableName, condition, null);
+            database.delete(shiftNoteTableName, condition, null);
+            database.delete(shiftTableName, condition, null);
             database.setTransactionSuccessful();
             b = true;
-        }catch (Exception e){
+        } catch (Exception e) {
             b = false;
             e.printStackTrace();
-        }finally {
+        } finally {
             database.endTransaction();
         }
         return b;
     }
 
-    public void fillBedManageList(){
+    public void fillBedManageList() {
         String sql = "SELECT bed.*,bedassign.*" +
                 " FROM bedassign" +
-                " INNER JOIN bed ON bedassign.bed_uuid = bed.bed_uuid" +
-                " WHERE person_uuid = ?" +
+                " INNER JOIN bed USING(bed_id)" +
+                " WHERE person_id = " + id +
                 " ORDER BY bedassign_id";
-        String[] args = {this.UUID};
-        Cursor cursor = DbHelper.getReadDB().rawQuery(sql, args);
+        Cursor cursor = DbHelper.getReadDB().rawQuery(sql, null);
         if (cursor.moveToFirst()) {
             do {
                 this.managedBeds.add(DbHelper.cursor2Modul(Bed.class, cursor));
@@ -173,16 +171,15 @@ public class Person extends DatabaseEntity {
         cursor.close();
     }
 
-    public boolean saveBedAssign(){
+    public boolean saveBedAssign() {
         boolean b = false;
-        String condition = "person_uuid = ?";
-        String[] args = {this.UUID};
+        String condition = "person_id = "+id;
         String tableName = DbHelper.getDataBaseTableName(BedAssign.class);
 
         SQLiteDatabase database = DbHelper.getWriteDB();
         database.beginTransaction();
         try {
-            database.delete(tableName, condition, args);
+            database.delete(tableName, condition, null);
             for (Bed bed : this.managedBeds) {
                 BedAssign bedAssign = new BedAssign();
                 bedAssign.setPerson(this);
@@ -191,10 +188,10 @@ public class Person extends DatabaseEntity {
             }
             database.setTransactionSuccessful();
             b = true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             b = false;
-        }finally {
+        } finally {
             database.endTransaction();
         }
         return b;
@@ -204,8 +201,8 @@ public class Person extends DatabaseEntity {
         List<Person> list = new ArrayList<>();
         String sql = "SELECT person.*,bed.*" +
                 " FROM person" +
-                " Left JOIN bedassign ON person.person_uuid = bedassign.person_uuid" +
-                " Left JOIN bed ON bedassign.bed_uuid = bed.bed_uuid" +
+                " Left JOIN bedassign USING(person_id)" +
+                " Left JOIN bed USING(bed_id)" +
                 " ORDER BY person_name,bed_id";
         Cursor cursor = DbHelper.getReadDB().rawQuery(sql, null);
         if (cursor.moveToFirst()) {
@@ -240,8 +237,8 @@ public class Person extends DatabaseEntity {
         List<Person> list = new ArrayList<>();
         String sql = "SELECT person.*,bed.*,bedassign.bedassign_id" +
                 " FROM person" +
-                " Left JOIN bedassign ON person.person_uuid = bedassign.person_uuid" +
-                " Left JOIN bed ON bedassign.bed_uuid = bed.bed_uuid" +
+                " Left JOIN bedassign USING(person_id)" +
+                " Left JOIN bed USING(bed_id)" +
                 " WHERE person_status = 0" +
                 " ORDER BY person_name,bedassign_id";
         Cursor cursor = DbHelper.getReadDB().rawQuery(sql, null);
@@ -271,17 +268,5 @@ public class Person extends DatabaseEntity {
         }
         cursor.close();
         return list;
-    }
-
-    public static Person find(SQLiteDatabase database, String uuid){
-        Person person = null;
-        String selection = "person_uuid = ?";
-        String[] args = {uuid};
-        Cursor cursor = database.query("person",null,selection,args,null,null,null);
-        if (cursor.moveToFirst()) {
-            person = DbHelper.cursor2Modul(Person.class, cursor);
-        }
-        cursor.close();
-        return person;
     }
 }

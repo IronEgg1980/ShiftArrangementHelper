@@ -75,7 +75,6 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         for (Class<?> clazz : classes) {
-            Log.d(TAG, "onCreate: " + clazz.getSimpleName());
             db.execSQL(getCreateTableSql(clazz));
         }
     }
@@ -116,11 +115,12 @@ public class DbHelper extends SQLiteOpenHelper {
             } else if (type.isEnum()) {
                 builder.append(columnName).append(" INTEGER,");
             } else {
-                String typeName = type.getTypeName();
-                int index = typeName.lastIndexOf(".");
-                String _tableName = typeName.substring(index + 1);
-                String _columnName = getDataBaseColumnName(_tableName, "UUID");
-                builder.append(_columnName).append(" TEXT,");
+//                String typeName = type.getTypeName();
+//                int index = typeName.lastIndexOf(".") + 1;
+//                String _tableName = typeName.substring(index).toLowerCase();
+//                String _columnName = getDataBaseColumnName(_tableName, "id");
+                String _columnName = getDataBaseColumnName(getDataBaseTableName(type), "id");
+                builder.append(_columnName).append(" INTEGER,");
             }
         }
         return builder.substring(0, builder.length() - 1) + ")";
@@ -243,8 +243,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     contentValues.put(columnName, value);
                 } else {
                     DatabaseEntity entity = (DatabaseEntity) field.get(t);
-                    String value = entity == null ? "" : entity.getUUID();
-                    String _columnName = getDataBaseColumnName(getDataBaseTableName(type), "UUID");
+                    long value = entity == null ? -1 : entity.getId();
+                    String _columnName = getDataBaseColumnName(getDataBaseTableName(type), "id");
                     contentValues.put(_columnName, value);
                 }
             }

@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private List<TodayShift> todayShifts;
     private String organizeName = "";
     private DateTimeFormatter formatter;
+    private Setup organizeNameSetup;
 
     private void startActivity(Class<?> clazz) {
         startActivity(new Intent(MainActivity.this, clazz));
@@ -67,16 +68,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDissmiss(DialogResult result, Object... values) {
                 if (result == DialogResult.CONFIRM) {
-                    Setup setup = Setup.findOneOrFirst("organize_name");
-                    if (setup == null) {
-                        setup = new Setup();
-                        setup.setKey("organize_name");
+                    if (organizeNameSetup == null) {
+                        organizeNameSetup = new Setup();
+                        organizeNameSetup.setKey("organize_name");
                     }
                     String s = (String) values[0];
-                    setup.setValue(s);
-                    if (setup.saveOrUpdate()) {
-                        organizeName = s;
-                        textviewGroupName.setText(s);
+                    organizeNameSetup.setValue(s);
+                    if (organizeNameSetup.saveOrUpdate()) {
+                        organizeName = TextUtils.isEmpty(s) ? "点击这里设置科室或团体的名称" : s;
+                        textviewGroupName.setText(organizeName);
                     } else {
                         new MyToast(MainActivity.this).centerShow("操作失败");
                     }
@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
     private void initial() {
         formatter = DateTimeFormatter.ofPattern("yyyy年M月d日 EEEE");
         textviewToday.setText(LocalDateTime.now().format(formatter));
-        Setup setup = Setup.findOneOrFirst("organize_name");
-        organizeName = setup == null ? "点击这里设置科室或团体的名称" : setup.getValue();
+        organizeNameSetup = Setup.findOneOrFirst("organize_name");
+        organizeName = organizeNameSetup == null || TextUtils.isEmpty(organizeNameSetup.getValue()) ? "点击这里设置科室或团体的名称" : organizeNameSetup.getValue();
         textviewGroupName.setText(organizeName);
         todayShifts = new ArrayList<>();
         adapter = new MyAdapter<TodayShift>(todayShifts) {

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,9 +98,9 @@ public class WorkCategoryManage extends AppCompatActivity {
                 myViewHolder.setText(R.id.textview_item_work_category_status, data.getMode().getText());
                 TextView textView = myViewHolder.getView(R.id.textview_item_work_overtimepay);
                 String extraText = data.isAutoMinus() ? "自动扣假 " + data.getMinusValue() + " 天" : data.getMode() == WorkMode.OVER_TIME ? "加班费（每次）：" + data.getOverTimePay() : "";
-                if(extraText.isEmpty()){
+                if (extraText.isEmpty()) {
                     textView.setVisibility(View.GONE);
-                }else {
+                } else {
                     myViewHolder.setText(R.id.textview_item_work_overtimepay, extraText);
                 }
                 final SwipeMenuLayout menuLayout = myViewHolder.getView(R.id.swipeMenuLayout);

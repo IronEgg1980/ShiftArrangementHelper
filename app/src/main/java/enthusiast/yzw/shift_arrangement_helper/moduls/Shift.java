@@ -19,6 +19,7 @@ import enthusiast.yzw.shift_arrangement_helper.enums.AbsentVarMode;
 import enthusiast.yzw.shift_arrangement_helper.tools.DateTool;
 
 public class Shift extends DatabaseEntity {
+    // 到这里
     private LocalDate date;
     private Person person;
     private WorkCategory work;
