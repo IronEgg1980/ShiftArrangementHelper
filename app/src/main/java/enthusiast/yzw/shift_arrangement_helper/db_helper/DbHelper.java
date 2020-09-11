@@ -24,6 +24,7 @@ import enthusiast.yzw.shift_arrangement_helper.moduls.Bed;
 import enthusiast.yzw.shift_arrangement_helper.moduls.BedAssign;
 import enthusiast.yzw.shift_arrangement_helper.moduls.DatabaseEntity;
 import enthusiast.yzw.shift_arrangement_helper.moduls.Person;
+import enthusiast.yzw.shift_arrangement_helper.moduls.Setup;
 import enthusiast.yzw.shift_arrangement_helper.moduls.Shift;
 import enthusiast.yzw.shift_arrangement_helper.moduls.ShiftNote;
 import enthusiast.yzw.shift_arrangement_helper.moduls.ShiftTemplate;
@@ -33,8 +34,6 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String dbName = "database.db"; // 数据库名称
     private static final int version = 1; // 数据库版本号
     private static final String TAG = "殷宗旺";
-    private static final String CREATE_ORGANIZE_NAME_TABLE = "CREATE TABLE organize_name (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT)";
-
     private static DbHelper dbHelper = null;
 
     // 数据库表
@@ -47,7 +46,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     Shift.class,
                     ShiftNote.class,
                     WorkCategory.class,
-                    ShiftTemplate.class
+                    ShiftTemplate.class,
+                    Setup.class
             };
 
     public static void onDestory() {
@@ -74,7 +74,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_ORGANIZE_NAME_TABLE);
         for (Class<?> clazz : classes) {
             Log.d(TAG, "onCreate: " + clazz.getSimpleName());
             db.execSQL(getCreateTableSql(clazz));

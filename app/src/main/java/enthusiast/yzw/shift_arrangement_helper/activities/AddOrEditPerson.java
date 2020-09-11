@@ -2,13 +2,16 @@ package enthusiast.yzw.shift_arrangement_helper.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
@@ -17,29 +20,38 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 
 import enthusiast.yzw.shift_arrangement_helper.R;
 import enthusiast.yzw.shift_arrangement_helper.db_helper.DbOperator;
+import enthusiast.yzw.shift_arrangement_helper.dialogs.AutoCompleteDialog;
+import enthusiast.yzw.shift_arrangement_helper.dialogs.DialogDissmissListener;
 import enthusiast.yzw.shift_arrangement_helper.dialogs.MyToast;
+import enthusiast.yzw.shift_arrangement_helper.enums.DialogResult;
 import enthusiast.yzw.shift_arrangement_helper.enums.Gender;
 import enthusiast.yzw.shift_arrangement_helper.moduls.Person;
+import enthusiast.yzw.shift_arrangement_helper.moduls.Setup;
 
 public class AddOrEditPerson extends AppCompatActivity {
-    private AppCompatTextView titleTextView;
-    private MaterialEditText etName;
-    private AppCompatRadioButton rbMan,rbWoman;
+    private TextView titleTextView;
+    private EditText etName;
+    private AppCompatRadioButton rbMan, rbWoman;
     private EditText etAge;
-    private MaterialEditText etProfessor;
-    private MaterialEditText etPost;
+    private EditText etProfessor;
+    private EditText etPost;
     private EditText etRatio;
-    private MaterialEditText etPhone;
-    private MaterialEditText etSchool;
-    private MaterialEditText etNote;
+    private EditText etPhone;
+    private EditText etSchool;
+    private EditText etNote;
     private MyToast toast;
     private int resultCode = -1;
 
     private Person person;
     private String mName = "";
+
+    private List<Setup> postList, proList;
+    private AutoCompleteDialog postDialog, proDialog;
 
     private void initialView() {
         findViewById(R.id.imageview_toolbar_back).setOnClickListener(new View.OnClickListener() {
@@ -73,6 +85,84 @@ public class AddOrEditPerson extends AppCompatActivity {
             }
         });
         toast = new MyToast(this);
+        postDialog = new AutoCompleteDialog(etPost, postList);
+        postDialog.setOnSeletedListener(new DialogDissmissListener() {
+            @Override
+            public void onDissmiss(DialogResult result, Object... values) {
+                String text = (String) values[0];
+                etPost.setText(text);
+            }
+        });
+        proDialog = new AutoCompleteDialog(etProfessor, proList);
+        proDialog.setOnSeletedListener(new DialogDissmissListener() {
+            @Override
+            public void onDissmiss(DialogResult result, Object... values) {
+                String text = (String) values[0];
+                etProfessor.setText(text);
+            }
+        });
+        etPost.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b)
+                    postDialog.show();
+                else
+                    postDialog.dismiss();
+            }
+        });
+        etPost.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                postList.clear();
+                if(TextUtils.isEmpty(editable)){
+                    postList.addAll(Setup.find("post"));
+                }else{
+                    postList.addAll(Setup.lookup("post",editable.toString()));
+                }
+                postDialog.notifyDataSetChanged();
+            }
+        });
+        etProfessor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b)
+                    proDialog.show();
+                else
+                    proDialog.dismiss();
+            }
+        });
+        etProfessor.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                proList.clear();
+                if(TextUtils.isEmpty(editable)){
+                    proList.addAll(Setup.find("professor"));
+                }else{
+                    proList.addAll(Setup.lookup("professor",editable.toString()));
+                }
+                proDialog.notifyDataSetChanged();
+            }
+        });
     }
 
     private void initial() {
@@ -80,6 +170,8 @@ public class AddOrEditPerson extends AppCompatActivity {
         if (bundle != null) {
             person = DbOperator.findByUUID(Person.class, bundle.getString("uuid"));
         }
+        postList = Setup.find("post");
+        proList = Setup.find("professor");
     }
 
     private String getEditTextString(EditText editText) {
@@ -92,7 +184,7 @@ public class AddOrEditPerson extends AppCompatActivity {
             return false;
         }
         String name = getEditTextString(etName);
-        int age = TextUtils.isEmpty(etAge.getText()) ? 1:Integer.parseInt(etAge.getText().toString()) ;
+        int age = TextUtils.isEmpty(etAge.getText()) ? 1 : Integer.parseInt(etAge.getText().toString());
         double ratio = TextUtils.isEmpty(etRatio.getText()) ? 0 : new BigDecimal(etRatio.getText().toString()).doubleValue();
         Gender gender = rbMan.isChecked() ? Gender.MAN : Gender.WOMAN;
         String professor = getEditTextString(etProfessor);
@@ -104,6 +196,27 @@ public class AddOrEditPerson extends AppCompatActivity {
         if (!name.equals(mName) && DbOperator.isExist(Person.class, "name", name)) {
             etName.setError("姓名重复！");
             return false;
+        }
+
+        if (!TextUtils.isEmpty(post)) {
+            Setup postSetup = new Setup();
+            postSetup.setKey("post");
+            postSetup.setValue(post);
+            if (!postSetup.isExist()) {
+                postSetup.save();
+                postList.add(postSetup);
+                postDialog.notifyDataSetChanged();
+            }
+        }
+        if (!TextUtils.isEmpty(professor)) {
+            Setup proSetup = new Setup();
+            proSetup.setKey("professor");
+            proSetup.setValue(professor);
+            if (!proSetup.isExist()) {
+                proSetup.save();
+                proList.add(proSetup);
+                proDialog.notifyDataSetChanged();
+            }
         }
 
         if (person == null)
@@ -122,7 +235,7 @@ public class AddOrEditPerson extends AppCompatActivity {
 
     private void saveAndExit() {
         if (save()) {
-            toast.centerShow("【" +person.getName() + "】已保存");
+            toast.centerShow("【" + person.getName() + "】已保存");
             resultCode = 666;
             onBackPressed();
         }
@@ -156,9 +269,9 @@ public class AddOrEditPerson extends AppCompatActivity {
             @Override
             public void run() {
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
-        },100);
+        }, 100);
     }
 
     @Override

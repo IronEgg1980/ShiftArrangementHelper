@@ -96,32 +96,32 @@ public final class DbOperator {
         return b;
     }
 
-    public static String getOrganizeName() {
-        String name = "";
-        Cursor cursor = DbHelper.getReadDB().query("organize_name", null, null, null, null, null, null, null);
-        if (cursor.moveToFirst()) {
-            name = cursor.getString(cursor.getColumnIndex("name"));
-        }
-        cursor.close();
-        return name;
-    }
-
-    public static boolean setOrganizeName(String name) {
-        boolean b = false;
-        SQLiteDatabase database = DbHelper.getWriteDB();
-        database.beginTransaction();
-        try {
-            database.delete("organize_name", null, null);
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("name", name);
-            database.insert("organize_name", null, contentValues);
-            database.setTransactionSuccessful();
-            b = true;
-        } finally {
-            database.endTransaction();
-        }
-        return b;
-    }
+//    public static String getOrganizeName() {
+//        String name = "";
+//        Cursor cursor = DbHelper.getReadDB().query("organize_name", null, null, null, null, null, null, null);
+//        if (cursor.moveToFirst()) {
+//            name = cursor.getString(cursor.getColumnIndex("name"));
+//        }
+//        cursor.close();
+//        return name;
+//    }
+//
+//    public static boolean setOrganizeName(String name) {
+//        boolean b = false;
+//        SQLiteDatabase database = DbHelper.getWriteDB();
+//        database.beginTransaction();
+//        try {
+//            database.delete("organize_name", null, null);
+//            ContentValues contentValues = new ContentValues();
+//            contentValues.put("name", name);
+//            database.insert("organize_name", null, contentValues);
+//            database.setTransactionSuccessful();
+//            b = true;
+//        } finally {
+//            database.endTransaction();
+//        }
+//        return b;
+//    }
 
     public static <T extends DatabaseEntity> int saveAll(List<T> list) {
         int i = 0;

@@ -23,7 +23,7 @@ public abstract class DatabaseEntity {
     public boolean save() {
         return save(DbHelper.getWriteDB());
     }
-    
+
     public boolean update(){
         return update(DbHelper.getWriteDB());
     }
@@ -38,13 +38,13 @@ public abstract class DatabaseEntity {
     }
 
     public boolean update(SQLiteDatabase database) {
-        ContentValues contentValues = DbHelper.modul2ContentValues(this);        
+        ContentValues contentValues = DbHelper.modul2ContentValues(this);
         String selection = getDbColumnName("uuid") + " = ?";
         String[] args = {this.UUID};
         return database.update(tableName, contentValues, selection, args) > 0;
     }
-    
-    public boolean dele(SQLiteDatabase database){       
+
+    public boolean dele(SQLiteDatabase database){
         String selection = getDbColumnName("uuid") + " = ?";
         String[] args = {this.UUID};
         return database.delete(tableName,selection,args) > 0;
@@ -55,15 +55,15 @@ public abstract class DatabaseEntity {
             return update();
         return save();
     }
-    
+
     public boolean isExist() {
         return DbOperator.isExist(this.getClass(),"UUID",this.UUID);
     }
 
     public boolean isSaved() {
         return this.id > 0;
-    }    
-    
+    }
+
     public String getDbColumnName(String fieldName){
         return DbHelper.getDataBaseColumnName(tableName, fieldName);
     }

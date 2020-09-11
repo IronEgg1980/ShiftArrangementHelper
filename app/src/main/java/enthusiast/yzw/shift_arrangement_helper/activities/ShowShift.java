@@ -27,11 +27,12 @@ import enthusiast.yzw.shift_arrangement_helper.dialogs.LoadingDialog;
 import enthusiast.yzw.shift_arrangement_helper.dialogs.MyPopMenu;
 import enthusiast.yzw.shift_arrangement_helper.dialogs.MyToast;
 import enthusiast.yzw.shift_arrangement_helper.enums.DialogResult;
+import enthusiast.yzw.shift_arrangement_helper.moduls.Setup;
 import enthusiast.yzw.shift_arrangement_helper.moduls.ShiftOfWeekView;
 import enthusiast.yzw.shift_arrangement_helper.tools.DateTool;
 
 public class ShowShift extends AppCompatActivity {
-    private final int CODE_BEGIN = 0, CODE_SUCCESS = 1,CODE_FAIL = -1;
+    private final int CODE_BEGIN = 0, CODE_SUCCESS = 1, CODE_FAIL = -1;
     private AppCompatImageView imageviewMenu;
     private List<ShiftOfWeekView> dataList;
     private MyFormView formView;
@@ -42,9 +43,9 @@ public class ShowShift extends AppCompatActivity {
     private MyPopMenu popMenu;
 
     private MyFormView.Header createHeader() {
-        String[] headerTitleArray = {"姓名", "", "", "", "", "", "", "", "备注","余假","管床"};
+        String[] headerTitleArray = {"姓名", "", "", "", "", "", "", "", "备注", "余假", "管床"};
         SparseIntArray widths = new SparseIntArray();
-        widths.put(0,200);
+        widths.put(0, 200);
         widths.put(8, 300);
         widths.put(9, 100);
         widths.put(10, 400);
@@ -55,15 +56,15 @@ public class ShowShift extends AppCompatActivity {
                 .setCellWidthArray(widths).build();
     }
 
-    private void creatPopMenu(){
-        String[] items = {"调整排班","删除本周排班","保存为模板"};
-        popMenu = new MyPopMenu(this,items);
+    private void creatPopMenu() {
+        String[] items = {"调整排班", "删除本周排班", "保存为模板"};
+        popMenu = new MyPopMenu(this, items);
         popMenu.setListener(new DialogDissmissListener() {
             @Override
             public void onDissmiss(DialogResult result, Object... values) {
-                if(result == DialogResult.CONFIRM){
+                if (result == DialogResult.CONFIRM) {
                     int index = (int) values[0];
-                    switch (index){
+                    switch (index) {
                         case 0:
                             edit();
                             break;
@@ -79,21 +80,21 @@ public class ShowShift extends AppCompatActivity {
         });
     }
 
-    private void edit(){
-        Intent intent = new Intent(ShowShift.this,AddOrEditShift.class);
-        intent.putExtra("localdate",monday.toEpochDay());
-        intent.putExtra("mode",1);
+    private void edit() {
+        Intent intent = new Intent(ShowShift.this, AddOrEditShift.class);
+        intent.putExtra("localdate", monday.toEpochDay());
+        intent.putExtra("mode", 1);
         startActivity(intent);
     }
 
-    private void del(){
-        if(dataList.isEmpty())
+    private void del() {
+        if (dataList.isEmpty())
             return;
-        ConfirmDialog.newInstance("删除？","确认要删除本周排班？")
+        ConfirmDialog.newInstance("删除？", "确认要删除本周排班？")
                 .setDialogDissmissListener(new DialogDissmissListener() {
                     @Override
                     public void onDissmiss(DialogResult result, Object... values) {
-                        if(result == DialogResult.CONFIRM){
+                        if (result == DialogResult.CONFIRM) {
                             ShiftOfWeekView.deleAll(monday);
                             dataList.clear();
                             adapter.notifyDataChanged();
@@ -101,21 +102,21 @@ public class ShowShift extends AppCompatActivity {
                         }
                     }
                 })
-                .show(getSupportFragmentManager(),"dele");
+                .show(getSupportFragmentManager(), "dele");
     }
 
-    private void saveToTemplate(){
+    private void saveToTemplate() {
 
     }
 
-    private void initial(){
+    private void initial() {
         monday = DateTool.getMonday(LocalDate.now());
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(@NonNull Message message) {
-                switch (message.what){
+                switch (message.what) {
                     case CODE_BEGIN:
-                        loadingDialog.show(getSupportFragmentManager(),"loading");
+                        loadingDialog.show(getSupportFragmentManager(), "loading");
                         break;
                     case CODE_SUCCESS:
                         loadingDialog.dismiss();
@@ -133,30 +134,30 @@ public class ShowShift extends AppCompatActivity {
         adapter = new MyFormView.FormAdapter<ShiftOfWeekView>(dataList) {
             @Override
             public void onBindData(MyFormView.Row row, ShiftOfWeekView shiftOfWeekView) {
-                row.setCellText(0,shiftOfWeekView.getPersonName());
-                for(int i = 0;i<7;i++){
-                    row.setCellText(i+1,shiftOfWeekView.getWorkCategoryName(i));
+                row.setCellText(0, shiftOfWeekView.getPersonName());
+                for (int i = 0; i < 7; i++) {
+                    row.setCellText(i + 1, shiftOfWeekView.getWorkCategoryName(i));
                 }
-                row.setCellText(8,shiftOfWeekView.getNote());
-                row.setCellText(9,shiftOfWeekView.getAbsentRemain()+"");
-                row.setCellText(10,shiftOfWeekView.getBedAssignString());
+                row.setCellText(8, shiftOfWeekView.getNote());
+                row.setCellText(9, shiftOfWeekView.getAbsentRemain() + "");
+                row.setCellText(10, shiftOfWeekView.getBedAssignString());
             }
         };
     }
 
     private void initialView() {
-         findViewById(R.id.imageview_toolbar_back).setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 onBackPressed();
-             }
-         });
-         findViewById(R.id.imageview_last_week).setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
+        findViewById(R.id.imageview_toolbar_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        findViewById(R.id.imageview_last_week).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 lastWeek();
-             }
-         });
+            }
+        });
         findViewById(R.id.imageview_next_week).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,7 +176,9 @@ public class ShowShift extends AppCompatActivity {
         formView.setRowHeight(120);
         formView.setTitleHeight(250);
         formView.setTitleTextSize(80);
-        formView.setTitleString(DbOperator.getOrganizeName() + "排班表");
+        Setup setup = Setup.findOneOrFirst("organize_name");
+        String s = setup == null ? "" : setup.getValue();
+        formView.setTitleString(s + "排班表");
         formView.setFirstScale(false);
         formView.setOnClick(new MyFormView.OnClick() {
             @Override
@@ -187,32 +190,32 @@ public class ShowShift extends AppCompatActivity {
         loadingDialog = LoadingDialog.newInstance("正在读取...");
     }
 
-    private void showMenu(){
-        if(popMenu == null)
+    private void showMenu() {
+        if (popMenu == null)
             creatPopMenu();
         popMenu.showAsDropDown(imageviewMenu);
     }
 
-    private void onCellClicked(MyFormView.Cell cell){
+    private void onCellClicked(MyFormView.Cell cell) {
         formView.setCurrentCell(null);
     }
 
-    private void thisWeek(){
+    private void thisWeek() {
         monday = DateTool.getMonday(LocalDate.now());
         readData(monday);
     }
 
-    private void lastWeek(){
+    private void lastWeek() {
         monday = monday.minusDays(7);
         readData(monday);
     }
 
-    private void nextWeek(){
+    private void nextWeek() {
         monday = monday.plusDays(7);
         readData(monday);
     }
 
-    private void readData(final LocalDate date){
+    private void readData(final LocalDate date) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -229,7 +232,7 @@ public class ShowShift extends AppCompatActivity {
         }).start();
     }
 
-    private void onDataListChanged(){
+    private void onDataListChanged() {
         adapter.notifyDataChanged();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M月\nd日\nEEEE", Locale.CHINA);
         String subTitle = monday.getYear() + " 年度 第 " + DateTool.getWeekOfYear(monday) + " 周";
