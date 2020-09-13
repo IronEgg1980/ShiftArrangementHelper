@@ -212,9 +212,9 @@ public class EditAbsentRemain extends AppCompatActivity {
         setContentView(R.layout.activity_edit_absent_remain);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String uuid = bundle.getString("person_uuid");
-            person = DbOperator.findByUUID(Person.class, uuid);
-            dataList = AbsentRemainDetails.findAll(uuid);
+            long id = bundle.getLong("person_id");
+            person = DbOperator.findByID(Person.class, id);
+            dataList = AbsentRemainDetails.findAll(id);
             Collections.reverse(dataList);
         }
         initialView();

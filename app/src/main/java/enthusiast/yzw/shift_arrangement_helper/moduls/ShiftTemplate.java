@@ -41,10 +41,9 @@ public class ShiftTemplate extends DatabaseEntity {
     @Override
     public boolean save(SQLiteDatabase database) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(getDbColumnName("uuid"), this.UUID);
         contentValues.put(getDbColumnName("name"), this.name);
         contentValues.put(getDbColumnName("index"), this.index);
-        contentValues.put("workcategory_uuid", workCategory == null ? "null" : workCategory.getUUID());
+        contentValues.put("workcategory_id", workCategory == null ? -1 : workCategory.getId());
         return database.insert(this.tableName, null, contentValues) > 0;
     }
 
@@ -108,7 +107,7 @@ public class ShiftTemplate extends DatabaseEntity {
     public static List<ShiftOfWeekView> find(String name) {
         List<ShiftOfWeekView> list = new ArrayList<>();
         String sql = "SELECT shifttemplate.*,workcategory.* FROM shifttemplate" +
-                " INNER JOIN workcategory USING(workcategory_uuid)" +
+                " INNER JOIN workcategory USING(workcategory_id)" +
                 " WHERE shifttemplate_name = ?" +
                 " ORDER BY shifttemplate_index";
         String[] args = {name};

@@ -45,8 +45,8 @@ public class AddOrEditBed extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_bed);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String uuid = bundle.getString("bed_uuid");
-            bed = DbOperator.findByUUID(Bed.class, uuid);
+            long id = bundle.getLong("bed_id");
+            bed = DbOperator.findByID(Bed.class, id);
         }
         intialView();
     }

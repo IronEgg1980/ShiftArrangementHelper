@@ -259,7 +259,7 @@ public class PersonManage extends AppCompatActivity {
         editPosition = position;
         Person person = ondutyPeople.get(position);
         Intent intent = new Intent(PersonManage.this, AddOrEditPerson.class);
-        intent.putExtra("uuid", person.getUUID());
+        intent.putExtra("id", person.getId());
         startActivityForResult(intent, REQUEST_CODE_EDIT);
     }
 
@@ -371,8 +371,8 @@ public class PersonManage extends AppCompatActivity {
                     }
                 }, 50);
             } else if (requestCode == REQUEST_CODE_EDIT) {
-                String uuid = ondutyPeople.remove(editPosition).getUUID();
-                ondutyPeople.add(editPosition, DbOperator.findByUUID(Person.class, uuid));
+                long id = ondutyPeople.remove(editPosition).getId();
+                ondutyPeople.add(editPosition, DbOperator.findByID(Person.class, id));
                 onDutyAdapter.notifyItemChanged(editPosition);
             }
         }

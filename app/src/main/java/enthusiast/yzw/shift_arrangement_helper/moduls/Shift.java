@@ -19,7 +19,6 @@ import enthusiast.yzw.shift_arrangement_helper.enums.AbsentVarMode;
 import enthusiast.yzw.shift_arrangement_helper.tools.DateTool;
 
 public class Shift extends DatabaseEntity {
-    // 到这里
     private LocalDate date;
     private Person person;
     private WorkCategory work;
@@ -70,8 +69,8 @@ public class Shift extends DatabaseEntity {
     public static List<Shift> find(String selection, String... args) {
         String sql = "SELECT shift.*,person.*,workcategory.*" +
                 " FROM shift" +
-                " INNER JOIN person ON shift.person_uuid = person.person_uuid" +
-                " INNER JOIN workcategory ON shift.workcategory_uuid = workcategory.workcategory_uuid";
+                " INNER JOIN person ON shift.person_id = person.person_id" +
+                " INNER JOIN workcategory ON shift.workcategory_id = workcategory.workcategory_id";
         if (selection != null) {
             sql = sql + " WHERE " + selection;
         }

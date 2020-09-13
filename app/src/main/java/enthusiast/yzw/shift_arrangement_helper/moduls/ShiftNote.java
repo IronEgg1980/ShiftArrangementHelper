@@ -51,14 +51,13 @@ public class ShiftNote extends DatabaseEntity {
         return false;
     }
 
-    public static ShiftNote find(int weekOfYear, String person_uuid) {
+    public static ShiftNote find(int weekOfYear, long personId) {
         ShiftNote shiftNote = null;
         String sql = "SELECT shiftnote.*,person.*" +
                 " FROM shiftnote" +
-                " INNER JOIN person ON shiftnote.person_uuid = person.person_uuid" +
-                " WHERE shiftnote_weekofyear = ? and shiftnote.person_uuid = ?";
-        String[] args = {String.valueOf(weekOfYear), person_uuid};
-        Cursor cursor = DbHelper.getReadDB().rawQuery(sql, args);
+                " INNER JOIN person USING(person_id)" +
+                " WHERE shiftnote_weekofyear = " + weekOfYear + " and shiftnote.person_uuid = " + personId;
+        Cursor cursor = DbHelper.getReadDB().rawQuery(sql, null);
         if (cursor.moveToFirst()) {
             shiftNote = DbHelper.cursor2Modul(ShiftNote.class, cursor);
         }

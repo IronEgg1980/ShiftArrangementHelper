@@ -72,8 +72,8 @@ public final class DbOperator {
         return list;
     }
 
-    public static <T extends DatabaseEntity> T findByUUID(Class<T> clazz, String uuid) {
-        Cursor cursor = getCursor(clazz, "UUID", uuid);
+    public static <T extends DatabaseEntity> T findByID(Class<T> clazz, long id) {
+        Cursor cursor = getCursor(clazz, "id", String.valueOf(id));
         T t = null;
         if (cursor.moveToFirst()) {
             t = DbHelper.cursor2Modul(clazz, cursor);

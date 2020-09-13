@@ -130,7 +130,7 @@ public class ShiftOfWeekView {
         for (int i = 0; i < tmp.size(); i++) {
             Person p = tmp.get(i).getPerson();
             p.fillBedManageList();
-            ShiftNote shiftNote = ShiftNote.find(weekOfYear, p.getUUID());
+            ShiftNote shiftNote = ShiftNote.find(weekOfYear, p.getId());
             ShiftOfWeekView shiftOfWeekView = new ShiftOfWeekView();
 
             for (int j = 0; j < 7; j++) {

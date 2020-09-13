@@ -168,7 +168,7 @@ public class AddOrEditPerson extends AppCompatActivity {
     private void initial() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            person = DbOperator.findByUUID(Person.class, bundle.getString("uuid"));
+            person = DbOperator.findByID(Person.class, bundle.getLong("id"));
         }
         postList = Setup.find("post");
         proList = Setup.find("professor");

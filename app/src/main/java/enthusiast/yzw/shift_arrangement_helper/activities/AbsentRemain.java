@@ -74,7 +74,7 @@ public class AbsentRemain extends AppCompatActivity {
     }
 
     private void showDetails(int position){
-        List<AbsentRemainDetails> list = AbsentRemainDetails.findAll(dataList.get(position).getUUID());
+        List<AbsentRemainDetails> list = AbsentRemainDetails.findAll(dataList.get(position).getId());
         if(!list.isEmpty()){
             ShowRemainDetailsDialog detailsDialog = new ShowRemainDetailsDialog(list);
             detailsDialog.show(getSupportFragmentManager(),"details");
@@ -86,7 +86,7 @@ public class AbsentRemain extends AppCompatActivity {
     private void adjustAbsentRemain(int position){
         editPosition = position;
         Intent intent = new Intent(AbsentRemain.this,EditAbsentRemain.class);
-        intent.putExtra("person_uuid",dataList.get(position).getUUID());
+        intent.putExtra("person_id",dataList.get(position).getId());
         startActivityForResult(intent,1);
     }
 
@@ -94,8 +94,8 @@ public class AbsentRemain extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1 && resultCode == 666){
-            String uuid = dataList.remove(editPosition).getUUID();
-            dataList.add(editPosition,DbOperator.findByUUID(Person.class,uuid));
+            long id = dataList.remove(editPosition).getId();
+            dataList.add(editPosition,DbOperator.findByID(Person.class,id));
             adapter.notifyItemChanged(editPosition);
         }
     }

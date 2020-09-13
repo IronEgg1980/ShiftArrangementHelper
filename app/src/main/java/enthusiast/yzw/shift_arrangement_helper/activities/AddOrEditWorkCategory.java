@@ -104,8 +104,8 @@ public class AddOrEditWorkCategory extends AppCompatActivity {
         mName = "";
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String uuid = bundle.getString("uuid");
-            workCategory = DbOperator.findByUUID(WorkCategory.class, uuid);
+            long id = bundle.getLong("id");
+            workCategory = DbOperator.findByID(WorkCategory.class, id);
         }
     }
 

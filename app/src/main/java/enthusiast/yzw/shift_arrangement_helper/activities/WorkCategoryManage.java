@@ -60,8 +60,8 @@ public class WorkCategoryManage extends AppCompatActivity {
                     }, 50);
                 }
             } else if (requestCode == REQUEST_CODE_EDIT) {
-                String uuid = dataList.remove(editPosition).getUUID();
-                dataList.add(editPosition, DbOperator.findByUUID(WorkCategory.class, uuid));
+                long id = dataList.remove(editPosition).getId();
+                dataList.add(editPosition, DbOperator.findByID(WorkCategory.class, id));
                 adapter.notifyItemChanged(editPosition);
             }
         }
@@ -138,7 +138,7 @@ public class WorkCategoryManage extends AppCompatActivity {
         editPosition = position;
         WorkCategory workCategory = dataList.get(position);
         Intent intent = new Intent(WorkCategoryManage.this, AddOrEditWorkCategory.class);
-        intent.putExtra("uuid", workCategory.getUUID());
+        intent.putExtra("id", workCategory.getId());
         startActivityForResult(intent, REQUEST_CODE_EDIT);
     }
 

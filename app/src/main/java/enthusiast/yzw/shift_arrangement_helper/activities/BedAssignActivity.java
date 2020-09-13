@@ -111,12 +111,20 @@ public class BedAssignActivity extends AppCompatActivity {
 
     private void clearBedAssign(int position) {
         Person person = dataList.get(position);
-        if (DbOperator.deleAll(BedAssign.class, "person_uuid = ?", person.getUUID())) {
+        if (BedAssign.deleAll(person.getId())) {
             person.managedBeds.clear();
             adapter.notifyItemChanged(position);
         } else {
             toast.centerShow("操作失败");
         }
+    }
+
+    private void share(){
+
+    }
+
+    private void getDrawble(){
+
     }
 
     @Override

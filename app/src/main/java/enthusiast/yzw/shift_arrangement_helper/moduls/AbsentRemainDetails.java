@@ -109,15 +109,13 @@ public class AbsentRemainDetails extends DatabaseEntity {
             database.beginTransaction();
             person.setAbsentRemainValue(person.getAbsentRemainValue() - this.varValue);
             changeAbsentRemain(database,false);
-            String condition = "absentremaindetails_uuid = ?";
-            String[] args = {this.UUID};
-            database.delete(tableName, condition, args);
+            String condition = "absentremaindetails_id = "+id;
+            database.delete(tableName, condition, null);
             database.setTransactionSuccessful();
             b = true;
         } catch (Exception e) {
             e.printStackTrace();
             b = false;
-            Log.e("殷宗旺", e.getLocalizedMessage(), e);
         } finally {
             database.endTransaction();
         }
@@ -127,7 +125,7 @@ public class AbsentRemainDetails extends DatabaseEntity {
     private void changeAbsentRemain(SQLiteDatabase database, boolean isAdd) {
         double value = isAdd ? this.varValue : this.varValue * -1;
         String sql = "UPDATE person SET person_absentRemainValue = person_absentRemainValue + " + value +
-                " WHERE person_uuid = '" + person.getUUID() + "'";
+                " WHERE person_id = '" + person.getId() + "'";
         database.execSQL(sql);
     }
 
@@ -139,15 +137,14 @@ public class AbsentRemainDetails extends DatabaseEntity {
 
     public void deleAutoMinusAbsent(SQLiteDatabase database) {
         changeAbsentRemain(database, false);
-        String condition = "absentremaindetails_uuid = ?";
-        String[] args = {this.UUID};
-        database.delete(tableName, condition, args);
+        String condition = "absentremaindetails_id = "+id;
+        database.delete(tableName, condition, null);
     }
 
     public static List<AbsentRemainDetails> findAll(SQLiteDatabase sqLiteDatabase, String selection, String[] args) {
         List<AbsentRemainDetails> list = new ArrayList<>();
         String sql = "SELECT absentremaindetails.*,person.* FROM absentremaindetails" +
-                " INNER JOIN person USING(person_uuid)";
+                " INNER JOIN person USING(person_id)";
         if (!TextUtils.isEmpty(selection))
             sql = sql + " WHERE " + selection;
         sql = sql + " ORDER BY absentremaindetails_date";
@@ -165,9 +162,8 @@ public class AbsentRemainDetails extends DatabaseEntity {
         return findAll(DbHelper.getReadDB(), null, null);
     }
 
-    public static List<AbsentRemainDetails> findAll(String person_uuid) {
-        String[] args = {person_uuid};
-        List<AbsentRemainDetails> list = findAll(DbHelper.getReadDB(), "person_uuid = ?", args);
+    public static List<AbsentRemainDetails> findAll(long id) {
+        List<AbsentRemainDetails> list = findAll(DbHelper.getReadDB(), "person_id = "+id, null);
         if (!list.isEmpty()) {
             Person person = list.get(0).getPerson();
             for (int i = 1; i < list.size(); i++) {

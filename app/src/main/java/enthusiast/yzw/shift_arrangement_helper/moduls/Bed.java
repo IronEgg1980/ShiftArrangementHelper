@@ -130,4 +130,18 @@ public class Bed extends DatabaseEntity {
         cursor.close();
         return list;
     }
+
+    public static void deleAll(){
+        SQLiteDatabase database = DbHelper.getWriteDB();
+        try {
+            database.beginTransaction();
+            database.delete("bed",null,null);
+            database.delete("bedassign",null,null);
+            database.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            database.endTransaction();
+        }
+    }
 }

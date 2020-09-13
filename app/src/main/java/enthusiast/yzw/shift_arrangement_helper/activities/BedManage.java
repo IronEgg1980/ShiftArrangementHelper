@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,17 +25,18 @@ import enthusiast.yzw.shift_arrangement_helper.custom_views.MyAdapter;
 import enthusiast.yzw.shift_arrangement_helper.db_helper.DbOperator;
 import enthusiast.yzw.shift_arrangement_helper.dialogs.ConfirmDialog;
 import enthusiast.yzw.shift_arrangement_helper.dialogs.DialogDissmissListener;
+import enthusiast.yzw.shift_arrangement_helper.dialogs.MyPopMenu;
 import enthusiast.yzw.shift_arrangement_helper.dialogs.PersonSelectDialog;
 import enthusiast.yzw.shift_arrangement_helper.enums.DialogResult;
 import enthusiast.yzw.shift_arrangement_helper.moduls.Bed;
 import enthusiast.yzw.shift_arrangement_helper.moduls.Person;
 
 public class BedManage extends AppCompatActivity {
-    private static final String TAG = "殷宗旺";
-    private final int REQUEST_CODE_ADD = 1,REQUEST_CODE_EDIT = 2;
+    private final int REQUEST_CODE_ADD = 1, REQUEST_CODE_EDIT = 2;
     private int editPosition = 0;
     private RecyclerView recyclerView;
-
+    private ImageView toolbarMenu;
+    private MyPopMenu popMenu;
     private MyAdapter<Bed> adapter;
     private List<Bed> bedList;
 
@@ -50,20 +52,20 @@ public class BedManage extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 666){
-            if(requestCode == REQUEST_CODE_ADD){
+        if (resultCode == 666) {
+            if (requestCode == REQUEST_CODE_ADD) {
                 readDb();
                 recyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(adapter.getItemCount() > 0){
-                            recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+                        if (adapter.getItemCount() > 0) {
+                            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                         }
                     }
-                },50);
-            }else if (requestCode == REQUEST_CODE_EDIT){
-                String uuid = bedList.remove(editPosition).getUUID();
-                bedList.add(editPosition, DbOperator.findByUUID(Bed.class,uuid));
+                }, 50);
+            } else if (requestCode == REQUEST_CODE_EDIT) {
+                long id = bedList.remove(editPosition).getId();
+                bedList.add(editPosition, DbOperator.findByID(Bed.class, id));
                 adapter.notifyItemChanged(editPosition);
             }
         }
@@ -71,15 +73,22 @@ public class BedManage extends AppCompatActivity {
 
     private void initialView() {
         recyclerView = findViewById(R.id.recyclerview_bed_management_list);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         findViewById(R.id.button_bed_management_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(BedManage.this,AddOrEditBed.class),REQUEST_CODE_ADD);
+                startActivityForResult(new Intent(BedManage.this, AddOrEditBed.class), REQUEST_CODE_ADD);
             }
         });
-        findViewById(R.id.imageview_toolbar_menu).setVisibility(View.GONE);
+        toolbarMenu = findViewById(R.id.imageview_toolbar_menu);
+        toolbarMenu.setVisibility(View.VISIBLE);
+        toolbarMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopMenu();
+            }
+        });
         TextView title = findViewById(R.id.textview_toolbar_title);
         title.setText("床位管理");
         findViewById(R.id.imageview_toolbar_back).setOnClickListener(new View.OnClickListener() {
@@ -95,13 +104,22 @@ public class BedManage extends AppCompatActivity {
         adapter = new MyAdapter<Bed>(bedList) {
             @Override
             public void bindData(final MyViewHolder myViewHolder, final Bed data) {
-                myViewHolder.setText(R.id.item_bed_management_name,data.getName());
+                String s = "无管理人员";
+                if (!data.bedManagerList.isEmpty()) {
+                    StringBuilder stringBuilder = new StringBuilder("管床：");
+                    for (Person p : data.bedManagerList) {
+                        stringBuilder.append(p.getName()).append("、");
+                    }
+                    s = stringBuilder.substring(0, stringBuilder.length() - 1);
+                }
+                myViewHolder.setText(R.id.item_bed_management_bedassign, s);
+                myViewHolder.setText(R.id.item_bed_management_name, data.getName());
                 final SwipeMenuLayout swipeMenuLayout = myViewHolder.getView(R.id.swipeMenuLayout);
                 myViewHolder.getView(R.id.menu_bed_manage_showassign).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         swipeMenuLayout.smoothClose();
-                        showAssignPerson(data);
+                        showAssignPerson(myViewHolder.getAbsoluteAdapterPosition());
                     }
                 });
                 myViewHolder.getView(R.id.menu_bed_manage_edit).setOnClickListener(new View.OnClickListener() {
@@ -115,7 +133,7 @@ public class BedManage extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         swipeMenuLayout.smoothClose();
-                        dele(data,myViewHolder.getAbsoluteAdapterPosition());
+                        dele(data, myViewHolder.getAbsoluteAdapterPosition());
                     }
                 });
                 myViewHolder.getView(R.id.rootLayout).setOnClickListener(new View.OnClickListener() {
@@ -145,41 +163,73 @@ public class BedManage extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void showAssignPerson(final Bed bed){
+    private void showPopMenu() {
+        String[] items = {"全部删除"};
+        if (popMenu == null) {
+            popMenu = new MyPopMenu(this, items);
+            popMenu.setListener(new DialogDissmissListener() {
+                @Override
+                public void onDissmiss(DialogResult result, Object... values) {
+                    if (result == DialogResult.CONFIRM) {
+                        deleAll();
+                    }
+                }
+            });
+        }
+        popMenu.showAsDropDown(toolbarMenu);
+    }
+
+    private void deleAll() {
+        ConfirmDialog.newInstance("全部删除？", "是否删除全部床位？")
+                .setDialogDissmissListener(new DialogDissmissListener() {
+                    @Override
+                    public void onDissmiss(DialogResult result, Object... values) {
+                        if (result == DialogResult.CONFIRM) {
+                            Bed.deleAll();
+                            bedList.clear();
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }).show(getSupportFragmentManager(), "confirm");
+    }
+
+    private void showAssignPerson(final int position) {
+        final Bed bed = bedList.get(position);
         PersonSelectDialog dialog = new PersonSelectDialog(bed.bedManagerList);
         dialog.setDialogDissmissListener(new DialogDissmissListener() {
             @Override
             public void onDissmiss(DialogResult result, Object... values) {
-                if(result == DialogResult.CONFIRM){
+                if (result == DialogResult.CONFIRM) {
                     bed.saveBedAssign();
+                    adapter.notifyItemChanged(position);
                 }
             }
-        }).show(getSupportFragmentManager(),"select_person");
+        }).show(getSupportFragmentManager(), "select_person");
     }
 
-    private void edit(int position){
+    private void edit(int position) {
         editPosition = position;
         Bed bed = bedList.get(position);
-        Intent intent = new Intent(BedManage.this,AddOrEditBed.class);
-        intent.putExtra("bed_uuid",bed.getUUID());
-        startActivityForResult(intent,REQUEST_CODE_EDIT);
+        Intent intent = new Intent(BedManage.this, AddOrEditBed.class);
+        intent.putExtra("bed_id", bed.getId());
+        startActivityForResult(intent, REQUEST_CODE_EDIT);
     }
 
-    private void dele(final Bed bed, final int position){
-        ConfirmDialog.newInstance("删除？","是否删除床位【"+bed.getName()+" 床】？")
+    private void dele(final Bed bed, final int position) {
+        ConfirmDialog.newInstance("删除？", "是否删除床位【" + bed.getName() + " 床】？")
                 .setDialogDissmissListener(new DialogDissmissListener() {
                     @Override
                     public void onDissmiss(DialogResult result, Object... values) {
-                        if(result == DialogResult.CONFIRM){
-                            if(bed.dele()) {
+                        if (result == DialogResult.CONFIRM) {
+                            if (bed.dele()) {
                                 bedList.remove(position);
                                 adapter.notifyItemRemoved(position);
-                            }else{
-                                Toast.makeText(BedManage.this,"删除失败",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(BedManage.this, "删除失败", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
-                }).show(getSupportFragmentManager(),"confirm");
+                }).show(getSupportFragmentManager(), "confirm");
     }
 
     private void readDb() {
